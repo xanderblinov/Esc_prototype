@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
+    compile group: 'com.j256.ormlite', name: 'ormlite-jdbc', version: '4.48'
+
+}
+
+task hello {
+    description = 'sqlite sample'
+    group = 'sqlite'
+}
