@@ -20,6 +20,7 @@ public class AccountApp
 	{
 
 		DatabaseApi databaseApi = new SqliteApi();
+		databaseApi.onStart();
 
 		// create an instance of ArticleImpl
 		Article article = new ArticleImpl();
@@ -30,5 +31,7 @@ public class AccountApp
 		Article article2 = databaseApi.getAllArticles().get(0);
 
 		System.out.println("Article: " + article2.getName());
+
+		databaseApi.onStop();
 	}
 }

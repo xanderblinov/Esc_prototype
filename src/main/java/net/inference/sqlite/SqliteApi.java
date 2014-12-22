@@ -59,7 +59,7 @@ public class SqliteApi implements DatabaseApi
 		}
 		catch (SQLException e)
 		{
-			SqliteLog.log(e.getMessage());
+			SqliteLog.log(e);
 		}
 
 		return null;
