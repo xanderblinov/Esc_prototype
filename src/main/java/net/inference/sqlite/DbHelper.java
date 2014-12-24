@@ -21,9 +21,16 @@ class DbHelper
 
 	private ConnectionSource mConnectionSource;
 
-	private static String getUrl()
+	private final Config.Database mDatabase;
+
+	public DbHelper(final Config.Database database)
 	{
-		return sBaseUrl + Config.getDatabaseUrl();
+		mDatabase = database;
+	}
+
+	private String getUrl()
+	{
+		return sBaseUrl + mDatabase.getName();
 	}
 
 	ConnectionSource getConnection() throws SQLException

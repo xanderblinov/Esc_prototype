@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import net.inference.Config;
 import net.inference.database.ArticleApi;
 import net.inference.database.DaoFactory;
 import net.inference.database.DatabaseApi;
@@ -17,9 +18,15 @@ import net.inference.sqlite.dto.ArticleImpl;
  */
 public class SqliteApi implements DatabaseApi
 {
-	private DbHelper mDbHelper = new DbHelper();
+	private final DbHelper mDbHelper;
 	private DaoFactory mDaoFactory = new SqliteDaoFactory();
 	private ArticleApi mArticleApi = new ArticleApiImpl(this);
+
+	public SqliteApi(Config.Database database)
+	{
+
+		mDbHelper = new DbHelper(database);
+	}
 
 	Dao<ArticleImpl, ?> getArticleDao() throws SQLException
 	{

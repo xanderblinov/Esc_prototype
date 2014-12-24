@@ -8,10 +8,24 @@ package net.inference;
  */
 public class Config
 {
-	private static final String databaseUrl = "test.db";
+	private static final String sqLitedatabaseExtension = ".db";
 
-	public static String getDatabaseUrl()
+	public static enum Database
 	{
-		return databaseUrl;
+		LIVE("netinference"),
+		TESt("test");
+
+		private final String mName;
+
+
+		Database(final String name)
+		{
+			mName = name + sqLitedatabaseExtension;
+		}
+
+		public String getName()
+		{
+			return mName;
+		}
 	}
 }

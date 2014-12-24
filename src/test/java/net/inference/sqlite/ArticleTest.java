@@ -1,30 +1,24 @@
-package com.example.sqlite;
+package net.inference.sqlite;
 
 import net.inference.Config;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Article;
-import net.inference.sqlite.SqliteApi;
 import net.inference.sqlite.dto.ArticleImpl;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Date: 12/19/2014
- * Time: 3:29 PM
+ * Date: 12/23/2014
+ * Time: 11:59 PM
  *
  * @author xanderblinov
- *
  */
-
-
-/**
- * this just a sample. All tests should be written in test folder
- */
-public class AccountApp
+public class ArticleTest
 {
-
-	public static void main(String[] args) throws Exception
-	{
-
-		DatabaseApi databaseApi = new SqliteApi(Config.Database.LIVE);
+	@Test
+	public void canConstructAPersonWithAName() {
+		DatabaseApi databaseApi = new SqliteApi(Config.Database.TESt);
 		databaseApi.onStart();
 
 		// create an instance of ArticleImpl
@@ -35,8 +29,8 @@ public class AccountApp
 
 		Article article2 = databaseApi.article().getAllArticles().get(0);
 
-		System.out.println("Article: " + article2.getName());
-
 		databaseApi.onStop();
+
+		assertEquals(article.getName(), article2.getName());
 	}
 }

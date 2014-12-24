@@ -1,4 +1,6 @@
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 sourceCompatibility = 1.5
 version = '1.0'
@@ -14,7 +16,23 @@ dependencies {
 
 }
 
+/*sourceSets {
+    test{
+        java {
+            srcDir 'src/testInt/java'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+}*/
+
+
 task hello {
     description = 'sqlite sample'
     group = 'sqlite'
+}
+
+task initSourceFolders { // add << before { to prevent executing during configuration phase
+    sourceSets.all {
+        println name
+    }
 }
