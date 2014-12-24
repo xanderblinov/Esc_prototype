@@ -14,11 +14,12 @@ public class SQLiteJDBC
 {
 	public static void main(String args[])
 	{
-		Connection c = null;
+		Connection c;
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:test.db");
+			c.getAutoCommit();
 		}
 		catch (Exception e)
 		{
