@@ -1,12 +1,12 @@
 package net.inference.sqlite;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import net.inference.database.ArticleApi;
+import net.inference.database.DaoFactory;
 import net.inference.database.DatabaseApi;
-import net.inference.database.dto.Article;
 import net.inference.sqlite.dto.ArticleImpl;
 
 /**
@@ -18,8 +18,10 @@ import net.inference.sqlite.dto.ArticleImpl;
 public class SqliteApi implements DatabaseApi
 {
 	private DbHelper mDbHelper = new DbHelper();
+	private DaoFactory mDaoFactory = new SqliteDaoFactory();
+	private ArticleApi mArticleApi = new ArticleApiImpl(this);
 
-	public Dao<ArticleImpl, ?> getArticleDao() throws SQLException
+	Dao<ArticleImpl, ?> getArticleDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ArticleImpl.class);
 	}
@@ -35,33 +37,17 @@ public class SqliteApi implements DatabaseApi
 	{
 		mDbHelper.onStop();
 	}
+
+
 	@Override
-	public void addArticle(final Article article)
+	public DaoFactory daoFactory()
 	{
-		try
-		{
-			getArticleDao().createIfNotExists((ArticleImpl) article);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		return mDaoFactory;
 	}
 
-
 	@Override
-	public List<ArticleImpl> getAllArticles()
+	public ArticleApi article()
 	{
-
-		try
-		{
-			return getArticleDao().queryForAll();
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-
-		return null;
+		return mArticleApi;
 	}
 }

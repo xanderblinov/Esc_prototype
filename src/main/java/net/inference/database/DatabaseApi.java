@@ -1,9 +1,5 @@
 package net.inference.database;
 
-import java.util.List;
-
-import net.inference.database.dto.Article;
-
 /**
  * Date: 12/21/2014
  * Time: 9:33 PM
@@ -22,6 +18,7 @@ public interface DatabaseApi
 	 */
 	public void onStop();
 
-	public void addArticle(Article article);
-	public List<? extends Article> getAllArticles();
+	public DaoFactory daoFactory();
+
+	public ArticleApi article();
 }

@@ -25,10 +25,10 @@ public class AccountApp
 		// create an instance of ArticleImpl
 		Article article = new ArticleImpl();
 		article.setName("Article 1");
-		databaseApi.addArticle(article);
+		databaseApi.article().addArticle(article);
 
 
-		Article article2 = databaseApi.getAllArticles().get(0);
+		Article article2 = databaseApi.article().getAllArticles().get(0);
 
 		System.out.println("Article: " + article2.getName());
 
