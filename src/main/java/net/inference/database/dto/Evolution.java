@@ -7,9 +7,9 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface Clustering
+public interface Evolution
 {
-	public static final String TABLE_NAME = "clustering";
+	public static final String TABLE_NAME = "evolution";
 
 	public static class Column
 	{

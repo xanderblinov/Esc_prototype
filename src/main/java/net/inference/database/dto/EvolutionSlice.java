@@ -7,16 +7,16 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface ClusteringSlice
+public interface EvolutionSlice
 {
-	public static final String TABLE_NAME = "clustering_slice";
+	public static final String TABLE_NAME = "evolution_slice";
 
 	public static class Column
 	{
 		public static final String id = "_id";
 		public static final String year = "year";
 		public static final String time = "time";
-		public static final String clustering_id = "clustering_id";
+		public static final String evolution_id = "evolution_id";
 	}
 	public int getId();
 
@@ -28,7 +28,7 @@ public interface ClusteringSlice
 
 	public void setTime(final String time);
 
-	public long getClusteringId();
+	public long getEvolutionId();
 
-	public void setClusteringId(final long clusteringId);
+	public void setEvolutionId(final long clusteringId);
 }

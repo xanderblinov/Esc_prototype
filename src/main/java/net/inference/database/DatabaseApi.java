@@ -6,8 +6,8 @@ import net.inference.database.dto.Article;
 import net.inference.database.dto.Author;
 import net.inference.database.dto.AuthorToCluster;
 import net.inference.database.dto.Cluster;
-import net.inference.database.dto.Clustering;
-import net.inference.database.dto.ClusteringSlice;
+import net.inference.database.dto.Evolution;
+import net.inference.database.dto.EvolutionSlice;
 import net.inference.database.dto.CoAuthorship;
 
 /**
@@ -43,9 +43,9 @@ public interface DatabaseApi
 
 	public Cluster addCluster(final Cluster cluster);
 
-	public Clustering addClustering(final Clustering clustering);
+	public Evolution addEvolution(final Evolution evolution);
 
-	public ClusteringSlice addClusteringSlice(final ClusteringSlice clusteringSlice);
+	public EvolutionSlice addEvolutionSlice(final EvolutionSlice evolutionSlice);
 
 	public List<? extends Article> getAllArticles();
 }

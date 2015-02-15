@@ -13,15 +13,15 @@ import net.inference.database.dto.Article;
 import net.inference.database.dto.Author;
 import net.inference.database.dto.AuthorToCluster;
 import net.inference.database.dto.Cluster;
-import net.inference.database.dto.Clustering;
-import net.inference.database.dto.ClusteringSlice;
+import net.inference.database.dto.Evolution;
+import net.inference.database.dto.EvolutionSlice;
 import net.inference.database.dto.CoAuthorship;
 import net.inference.sqlite.dto.ArticleImpl;
 import net.inference.sqlite.dto.AuthorImpl;
 import net.inference.sqlite.dto.AuthorToClusterImpl;
 import net.inference.sqlite.dto.ClusterImpl;
-import net.inference.sqlite.dto.ClusteringImpl;
-import net.inference.sqlite.dto.ClusteringSliceImpl;
+import net.inference.sqlite.dto.EvolutionImpl;
+import net.inference.sqlite.dto.EvolutionSliceImpl;
 import net.inference.sqlite.dto.CoAuthorshipImpl;
 
 /**
@@ -91,14 +91,14 @@ public class SqliteApi implements DatabaseApi
 		return DaoManager.createDao(mDbHelper.getConnection(), ClusterImpl.class);
 	}
 
-	Dao<ClusteringImpl, ?> getClusteringDao() throws SQLException
+	Dao<EvolutionImpl, ?> getEvolutionDao() throws SQLException
 	{
-		return DaoManager.createDao(mDbHelper.getConnection(), ClusteringImpl.class);
+		return DaoManager.createDao(mDbHelper.getConnection(), EvolutionImpl.class);
 	}
 
-	Dao<ClusteringSliceImpl, ?> getClusteringSliceDao() throws SQLException
+	Dao<EvolutionSliceImpl, ?> getEvolutionSliceDao() throws SQLException
 	{
-		return DaoManager.createDao(mDbHelper.getConnection(), ClusteringSliceImpl.class);
+		return DaoManager.createDao(mDbHelper.getConnection(), EvolutionSliceImpl.class);
 	}
 
 
@@ -173,11 +173,11 @@ public class SqliteApi implements DatabaseApi
 	}
 
 	@Override
-	public Clustering addClustering(final Clustering clustering)
+	public Evolution addEvolution(final Evolution evolution)
 	{
 		try
 		{
-			return getClusteringDao().createIfNotExists((ClusteringImpl) clustering);
+			return getEvolutionDao().createIfNotExists((EvolutionImpl) evolution);
 		}
 		catch (SQLException e)
 		{
@@ -187,11 +187,11 @@ public class SqliteApi implements DatabaseApi
 	}
 
 	@Override
-	public ClusteringSlice addClusteringSlice(final ClusteringSlice clusteringSlice)
+	public EvolutionSlice addEvolutionSlice(final EvolutionSlice evolutionSlice)
 	{
 		try
 		{
-			return getClusteringSliceDao().createIfNotExists((ClusteringSliceImpl) clusteringSlice);
+			return getEvolutionSliceDao().createIfNotExists((EvolutionSliceImpl) evolutionSlice);
 		}
 		catch (SQLException e)
 		{

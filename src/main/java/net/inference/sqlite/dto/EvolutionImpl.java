@@ -3,7 +3,7 @@ package net.inference.sqlite.dto;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import net.inference.database.dto.Clustering;
+import net.inference.database.dto.Evolution;
 import net.inference.database.dto.ClusteringType;
 
 /**
@@ -12,8 +12,8 @@ import net.inference.database.dto.ClusteringType;
  *
  * @author xanderblinov
  */
-@DatabaseTable(tableName = Clustering.TABLE_NAME)
-public class ClusteringImpl implements Clustering
+@DatabaseTable(tableName = Evolution.TABLE_NAME)
+public class EvolutionImpl implements Evolution
 {     
 	
 	@DatabaseField(columnName = Column.id, generatedId = true)

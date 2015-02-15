@@ -2,7 +2,7 @@ package net.inference.sqlite.dto;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import net.inference.database.dto.ClusteringSlice;
+import net.inference.database.dto.EvolutionSlice;
 
 /**
  * Date: 2/1/2015
@@ -10,8 +10,8 @@ import net.inference.database.dto.ClusteringSlice;
  *
  * @author xanderblinov
  */
-@DatabaseTable(tableName = ClusteringSlice.TABLE_NAME)
-public class ClusteringSliceImpl implements ClusteringSlice
+@DatabaseTable(tableName = EvolutionSlice.TABLE_NAME)
+public class EvolutionSliceImpl implements EvolutionSlice
 {     
 	
 	@DatabaseField(columnName = Column.id, generatedId = true)
@@ -20,8 +20,8 @@ public class ClusteringSliceImpl implements ClusteringSlice
 	private String mYear;
 	@DatabaseField(columnName = Column.time)
 	private String mTime;
-	@DatabaseField(columnName = Column.clustering_id)
-	private long mClusteringId;
+	@DatabaseField(columnName = Column.evolution_id)
+	private long mEvolutionId;
 
 	public int getId()
 	{
@@ -48,13 +48,13 @@ public class ClusteringSliceImpl implements ClusteringSlice
 		mTime = time;
 	}
 
-	public long getClusteringId()
+	public long getEvolutionId()
 	{
-		return mClusteringId;
+		return mEvolutionId;
 	}
 
-	public void setClusteringId(final long clusteringId)
+	public void setEvolutionId(final long clusteringId)
 	{
-		mClusteringId = clusteringId;
+		mEvolutionId = clusteringId;
 	}
 }

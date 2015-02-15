@@ -4,15 +4,15 @@ import net.inference.Config;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Author;
 import net.inference.database.dto.Cluster;
-import net.inference.database.dto.Clustering;
-import net.inference.database.dto.ClusteringSlice;
+import net.inference.database.dto.Evolution;
+import net.inference.database.dto.EvolutionSlice;
 import net.inference.database.dto.ClusteringType;
 import net.inference.sqlite.SqliteApi;
 import net.inference.sqlite.dto.AuthorImpl;
 import net.inference.sqlite.dto.AuthorToClusterImpl;
 import net.inference.sqlite.dto.ClusterImpl;
-import net.inference.sqlite.dto.ClusteringImpl;
-import net.inference.sqlite.dto.ClusteringSliceImpl;
+import net.inference.sqlite.dto.EvolutionImpl;
+import net.inference.sqlite.dto.EvolutionSliceImpl;
 import net.inference.sqlite.dto.CoAuthorshipImpl;
 
 /**
@@ -48,36 +48,36 @@ public class AccountApp
 
 		System.out.println("Article: " + article2.getName());*/
 
-		fillTestClustering(databaseApi, 15, 5);
+		fillTestEvolution(databaseApi, 15, 5);
 		addEvolution(databaseApi,15,5,1991);
 		databaseApi.onStop();
 	}
 
 	private void addEvolution(final DatabaseApi databaseApi, final int size, final int clickSize, final int year)
 	{
-		Clustering clustering = new ClusteringImpl();
-		clustering.setType(ClusteringType.SCAN);
+		Evolution evolution = new EvolutionImpl();
+		evolution.setType(ClusteringType.SCAN);
 
-		clustering = databaseApi.addClustering(clustering);
+		evolution = databaseApi.addEvolution(evolution);
 
 		for (int m = 0, i = year; m < size; m += clickSize, i++)
 		{
-			addSlice(databaseApi, size - m, clickSize, String.valueOf(i), clustering);
+			addSlice(databaseApi, size - m, clickSize, String.valueOf(i), evolution);
 		}
 	}
 
-	private void addSlice(final DatabaseApi databaseApi, final int size, final int clickSize, final String year, final Clustering clustering)
+	private void addSlice(final DatabaseApi databaseApi, final int size, final int clickSize, final String year, final Evolution evolution)
 	{
-		ClusteringSlice clusteringSlice = new ClusteringSliceImpl();
-		clusteringSlice.setTime(year);
-		clusteringSlice.setYear(year);
-		clusteringSlice.setClusteringId(clustering.getId());
-		clusteringSlice = databaseApi.addClusteringSlice(clusteringSlice);
+		EvolutionSlice evolutionSlice = new EvolutionSliceImpl();
+		evolutionSlice.setTime(year);
+		evolutionSlice.setYear(year);
+		evolutionSlice.setEvolutionId(evolution.getId());
+		evolutionSlice = databaseApi.addEvolutionSlice(evolutionSlice);
 
 
 		for (int m = 0; m < size; m += clickSize)
 		{
-			Cluster cluster = new ClusterImpl(clusteringSlice.getId());
+			Cluster cluster = new ClusterImpl(evolutionSlice.getId());
 			databaseApi.addCluster(cluster);
 			for (int i = m; i < m + clickSize; i++)
 			{
@@ -90,7 +90,7 @@ public class AccountApp
 	}
 
 
-	private void fillTestClustering(final DatabaseApi databaseApi, final int size, final int clickSize)
+	private void fillTestEvolution(final DatabaseApi databaseApi, final int size, final int clickSize)
 	{
 
 
