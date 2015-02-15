@@ -7,6 +7,15 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import net.inference.Config;
 import net.inference.sqlite.dto.ArticleImpl;
+import net.inference.sqlite.dto.ClusterImpl;
+import net.inference.sqlite.dto.ClusteringImpl;
+import net.inference.sqlite.dto.ClusteringSliceImpl;
+import net.inference.sqlite.dto.AuthorImpl;
+import net.inference.sqlite.dto.AuthorToClusterImpl;
+import net.inference.sqlite.dto.CoAuthorshipImpl;
+import net.inference.sqlite.dto.ParameterImpl;
+import net.inference.sqlite.dto.PrimitiveAuthorImpl;
+import net.inference.sqlite.dto.PrimitiveCoAuthorshipImpl;
 
 /**
  * Date: 12/21/2014
@@ -49,6 +58,15 @@ class DbHelper
 			initConnection();
 			ConnectionSource connectionSource = getConnection();
 			TableUtils.createTableIfNotExists(connectionSource, ArticleImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, ClusterImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, ClusteringImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, ClusteringSliceImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, AuthorImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, AuthorToClusterImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, CoAuthorshipImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, ParameterImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, PrimitiveAuthorImpl.class);
+			TableUtils.createTableIfNotExists(connectionSource, PrimitiveCoAuthorshipImpl.class);
 
 			//TODO add other tables
 		}

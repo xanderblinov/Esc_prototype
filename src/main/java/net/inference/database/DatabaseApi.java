@@ -1,5 +1,15 @@
 package net.inference.database;
 
+import java.util.List;
+
+import net.inference.database.dto.Article;
+import net.inference.database.dto.Author;
+import net.inference.database.dto.AuthorToCluster;
+import net.inference.database.dto.Cluster;
+import net.inference.database.dto.Clustering;
+import net.inference.database.dto.ClusteringSlice;
+import net.inference.database.dto.CoAuthorship;
+
 /**
  * Date: 12/21/2014
  * Time: 9:33 PM
@@ -8,6 +18,11 @@ package net.inference.database;
  */
 public interface DatabaseApi
 {
+
+	public DaoFactory daoFactory();
+
+	public ArticleApi article();
+
 	/**
 	 * Init database and table
 	 */
@@ -18,7 +33,19 @@ public interface DatabaseApi
 	 */
 	public void onStop();
 
-	public DaoFactory daoFactory();
+	public Article addArticle(final Article article);
 
-	public ArticleApi article();
+	public Author addAuthor(final Author author);
+
+	public CoAuthorship addCoAuthorship(final CoAuthorship author);
+
+	public boolean addAuthorToCluster(final AuthorToCluster authorToCluster);
+
+	public Cluster addCluster(final Cluster cluster);
+
+	public Clustering addClustering(final Clustering clustering);
+
+	public ClusteringSlice addClusteringSlice(final ClusteringSlice clusteringSlice);
+
+	public List<? extends Article> getAllArticles();
 }

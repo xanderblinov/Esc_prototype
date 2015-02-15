@@ -18,7 +18,7 @@ public class ArticleTest
 {
 	@Test
 	public void canConstructAPersonWithAName() {
-		DatabaseApi databaseApi = new SqliteApi(Config.Database.TESt);
+		DatabaseApi databaseApi = new SqliteApi(Config.Database.TEST);
 		databaseApi.onStart();
 
 		// create an instance of ArticleImpl

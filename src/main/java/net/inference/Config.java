@@ -13,7 +13,7 @@ public class Config
 	public static enum Database
 	{
 		LIVE("netinference"),
-		TESt("test");
+		TEST("test");
 
 		private final String mName;
 
