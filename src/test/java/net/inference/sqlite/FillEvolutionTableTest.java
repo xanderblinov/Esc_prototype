@@ -1,5 +1,8 @@
 package net.inference.sqlite;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.logger.Logger;
+import com.j256.ormlite.logger.LoggerFactory;
 import net.inference.Config;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Author;
@@ -13,6 +16,12 @@ import net.inference.sqlite.dto.ClusterImpl;
 import net.inference.sqlite.dto.EvolutionImpl;
 import net.inference.sqlite.dto.EvolutionSliceImpl;
 import net.inference.sqlite.dto.CoAuthorshipImpl;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Date: 12/19/2014
@@ -67,6 +76,8 @@ public class FillEvolutionTableTest
 
 	private void addSlice(final DatabaseApi databaseApi, final int size, final int clickSize, final String year, final Evolution evolution)
 	{
+        AuthorUtils authorUtils = new AuthorUtils(databaseApi);
+
 		EvolutionSlice evolutionSlice = new EvolutionSliceImpl();
 		evolutionSlice.setTime(year);
 		evolutionSlice.setYear(year);
@@ -80,7 +91,7 @@ public class FillEvolutionTableTest
 			databaseApi.addCluster(cluster);
 			for (int i = m; i < m + clickSize; i++)
 			{
-				databaseApi.addAuthorToCluster(new AuthorToClusterImpl(i, cluster.getId()));
+				databaseApi.addAuthorToCluster(new AuthorToClusterImpl(authorUtils.queryAuthorIdForName("name" + i), cluster.getId()));
 			}
 
 		}
@@ -92,7 +103,8 @@ public class FillEvolutionTableTest
 	private void fillTestEvolution(final DatabaseApi databaseApi, final int size, final int clickSize)
 	{
 
-
+        AuthorUtils authorUtils = new AuthorUtils(databaseApi);
+        long firstId, secondId;
 		for (int m = 0; m < size; m += clickSize)
 		{
 
@@ -103,6 +115,7 @@ public class FillEvolutionTableTest
 				author.setName("name" + String.valueOf(i));
 				author.setSurname("surname" + String.valueOf(i));
 				author.setEncoding("encoding" + String.valueOf(i));
+                author.setClick("click" + (m / clickSize));
 				databaseApi.addAuthor(author);
 			}
 
@@ -110,22 +123,59 @@ public class FillEvolutionTableTest
 			{
 				for (int j = i; j < m + clickSize; j++)
 				{
-					databaseApi.addCoAuthorship(new CoAuthorshipImpl(i, j));
+                    firstId = authorUtils.queryAuthorIdForName("name" + i);
+                    secondId = authorUtils.queryAuthorIdForName("name" + j);
+
+                    databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstId, secondId));
 					if (i != j)
 					{
-						databaseApi.addCoAuthorship(new CoAuthorshipImpl(j, i));
+						databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondId, firstId));
 					}
 				}
 			}
 
 			if (m + clickSize < size)
 			{
-				databaseApi.addCoAuthorship(new CoAuthorshipImpl(m + clickSize - 1, m + clickSize));
-				databaseApi.addCoAuthorship(new CoAuthorshipImpl(m + clickSize, m + clickSize - 1));
+                firstId = authorUtils.queryAuthorIdForName("name" + (m + clickSize - 2));
+                secondId = authorUtils.queryAuthorIdForName("name" + (m + clickSize-1));
+
+				databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstId, secondId));
+				databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondId, firstId));
 			}
 
 		}
 
 
 	}
+
+    /**
+     * Utility class only for test data
+     */
+    private class AuthorUtils {
+        private Dao<AuthorImpl, Integer> authorDao;
+        private final Logger logger = LoggerFactory.getLogger(AuthorUtils.class);
+
+        public AuthorUtils(DatabaseApi databaseApi) {
+            try {
+                authorDao = (Dao<AuthorImpl, Integer>) ((SqliteApi) databaseApi).getInferenceAuthorDao();
+            } catch (SQLException e) {
+                logger.error("Failed to obtain Author dao", e);
+            }
+        }
+
+        long queryAuthorIdForName(final String authorName) {
+            Map<String, Object> values = new HashMap<String, Object>();
+            values.put("name", authorName);
+            try {
+                List<AuthorImpl> authors = authorDao.queryForFieldValues(values);
+                if (authors == null || authors.size() == 0) {
+                    return -1;
+                }
+                return authorDao.extractId(authors.get(0)).longValue();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return -1;
+        }
+    }
 }

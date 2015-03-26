@@ -23,6 +23,9 @@ public class AuthorImpl implements Author
 	@DatabaseField(columnName = Column.encoding)
 	private String mEncoding;
 
+	@DatabaseField(columnName = Column.click)
+	private String mClick;
+
 	public AuthorImpl()
 	{
 		// ORMLite needs a no-arg constructor
@@ -64,4 +67,14 @@ public class AuthorImpl implements Author
 	{
 		mEncoding = encoding;
 	}
+
+    @Override
+    public String getClick() {
+        return mClick;
+    }
+
+    @Override
+    public void setClick(String click) {
+        mClick = click;
+    }
 }
