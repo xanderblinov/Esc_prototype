@@ -66,37 +66,37 @@ public class SqliteApi implements DatabaseApi
 		return mArticleApi;
 	}
 
-	public Dao<ArticleImpl, ?> getArticleDao() throws SQLException
+	public <T> Dao<ArticleImpl, T> getArticleDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ArticleImpl.class);
 	}
 
-	Dao<AuthorImpl, ?> getInferenceAuthorDao() throws SQLException
+	<T> Dao<AuthorImpl, T> getInferenceAuthorDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), AuthorImpl.class);
 	}
 
-	Dao<CoAuthorshipImpl, ?> getInferenceCoAuthorshipDao() throws SQLException
+    <T> Dao<CoAuthorshipImpl, T> getInferenceCoAuthorshipDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), CoAuthorshipImpl.class);
 	}
 
-	Dao<AuthorToClusterImpl, ?> getAuthorToClusterDao() throws SQLException
+    <T> Dao<AuthorToClusterImpl, T> getAuthorToClusterDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), AuthorToClusterImpl.class);
 	}
 
-	Dao<ClusterImpl, ?> getClusterDao() throws SQLException
+    <T> Dao<ClusterImpl, T> getClusterDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ClusterImpl.class);
 	}
 
-	Dao<EvolutionImpl, ?> getEvolutionDao() throws SQLException
+	<T> Dao<EvolutionImpl, T> getEvolutionDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), EvolutionImpl.class);
 	}
 
-	Dao<EvolutionSliceImpl, ?> getEvolutionSliceDao() throws SQLException
+    <T> Dao<EvolutionSliceImpl, T> getEvolutionSliceDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), EvolutionSliceImpl.class);
 	}

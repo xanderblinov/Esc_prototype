@@ -157,7 +157,7 @@ public class FillEvolutionTableTest
 
         public AuthorUtils(DatabaseApi databaseApi) {
             try {
-                authorDao = (Dao<AuthorImpl, Integer>) ((SqliteApi) databaseApi).getInferenceAuthorDao();
+                authorDao =  ((SqliteApi) databaseApi).getInferenceAuthorDao();
             } catch (SQLException e) {
                 logger.error("Failed to obtain Author dao", e);
             }
