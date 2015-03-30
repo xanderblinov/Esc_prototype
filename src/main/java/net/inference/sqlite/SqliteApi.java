@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
 import net.inference.Config;
 import net.inference.database.ArticleApi;
+import net.inference.database.AuthorApi;
 import net.inference.database.DaoFactory;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Article;
@@ -34,6 +36,7 @@ public class SqliteApi implements DatabaseApi
 {
 	private final DbHelper mDbHelper;
 	private ArticleApi mArticleApi = new ArticleApiImpl(this);
+    private AuthorApi  authorApi = new AuthorApiImpl(this);
 
 	public SqliteApi(Config.Database database, boolean recreateDatabase)
 	{
@@ -60,7 +63,12 @@ public class SqliteApi implements DatabaseApi
 		return mArticleApi;
 	}
 
-	public <T> Dao<ArticleImpl, T> getArticleDao() throws SQLException
+    @Override
+    public AuthorApi author() {
+        return authorApi;
+    }
+
+    public <T> Dao<ArticleImpl, T> getArticleDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ArticleImpl.class);
 	}
@@ -110,47 +118,7 @@ public class SqliteApi implements DatabaseApi
 		return null;
 	}
 
-	@Override
-	public Author addAuthor(final Author author)
-	{
-		try
-		{
-			return getInferenceAuthorDao().createIfNotExists((AuthorImpl) author);
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-		return null;
-	}
 
-	@Override
-	public CoAuthorship addCoAuthorship(final CoAuthorship author)
-	{
-		try
-		{
-			return getInferenceCoAuthorshipDao().createIfNotExists((CoAuthorshipImpl) author);
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-		return null;
-	}
-
-	@Override
-	public boolean addAuthorToCluster(final AuthorToCluster authorToCluster)
-	{
-		try
-		{
-			return getAuthorToClusterDao().create((AuthorToClusterImpl) authorToCluster) == 1;
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-		return false;
-	}
 
 	@Override
 	public Cluster addCluster(final Cluster cluster)

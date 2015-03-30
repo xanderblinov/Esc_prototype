@@ -20,6 +20,7 @@ public interface DatabaseApi
 {
 
 	public ArticleApi article();
+    public AuthorApi  author();
 
 	/**
 	 * Init database and table
@@ -32,12 +33,6 @@ public interface DatabaseApi
 	public void onStop();
 
 	public Article addArticle(final Article article);
-
-	public Author addAuthor(final Author author);
-
-	public CoAuthorship addCoAuthorship(final CoAuthorship author);
-
-	public boolean addAuthorToCluster(final AuthorToCluster authorToCluster);
 
 	public Cluster addCluster(final Cluster cluster);
 

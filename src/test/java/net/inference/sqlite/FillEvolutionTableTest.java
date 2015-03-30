@@ -6,6 +6,7 @@ import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import net.inference.Config;
+import net.inference.database.AuthorApi;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Author;
 import net.inference.database.dto.Cluster;
@@ -44,7 +45,7 @@ public class FillEvolutionTableTest
 
 	private void execute()
 	{
-		DatabaseApi databaseApi = new SqliteApi(Config.Database.TEST, true);
+		DatabaseApi databaseApi = new SqliteApi(Config.Database.TEST, false);
 		databaseApi.onStart();
 
 		// create an instance of ArticleImpl
@@ -78,6 +79,7 @@ public class FillEvolutionTableTest
 	private void addSlice(final DatabaseApi databaseApi, final int size, final int clickSize, final String year, final Evolution evolution)
 	{
         AuthorUtils authorUtils = new AuthorUtils(databaseApi);
+        AuthorApi authorapi = databaseApi.author();
 
 		EvolutionSlice evolutionSlice = new EvolutionSliceImpl();
 		evolutionSlice.setTime(year);
@@ -92,7 +94,7 @@ public class FillEvolutionTableTest
 			databaseApi.addCluster(cluster);
 			for (int i = m; i < m + clickSize; i++)
 			{
-				databaseApi.addAuthorToCluster(new AuthorToClusterImpl(authorUtils.queryAuthorForName("name" + i), cluster));
+				authorapi.addAuthorToCluster(authorUtils.queryAuthorForName("name" + i), cluster);
 			}
 
 		}
@@ -105,6 +107,9 @@ public class FillEvolutionTableTest
 	{
 
         AuthorUtils authorUtils = new AuthorUtils(databaseApi);
+
+        AuthorApi authorApi = databaseApi.author();
+
         Author firstAuthor, secondAuthor;
 		for (int m = 0; m < size; m += clickSize)
 		{
@@ -117,7 +122,7 @@ public class FillEvolutionTableTest
 				author.setSurname("surname" + String.valueOf(i));
 				author.setEncoding("encoding" + String.valueOf(i));
                 author.setClick("click" + (m / clickSize));
-				databaseApi.addAuthor(author);
+				databaseApi.author().addAuthor(author);
 			}
 
 			for (int i = m; i < m + clickSize; i++)
@@ -127,10 +132,10 @@ public class FillEvolutionTableTest
                     firstAuthor = authorUtils.queryAuthorForName("name" + i);
                     secondAuthor = authorUtils.queryAuthorForName("name" + j);
 
-                    databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstAuthor, secondAuthor));
+                    authorApi.addCoauthor(firstAuthor, secondAuthor);
 					if (i != j)
 					{
-						databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondAuthor, firstAuthor));
+						authorApi.addCoauthor(secondAuthor, firstAuthor);
 					}
 				}
 			}
@@ -140,8 +145,8 @@ public class FillEvolutionTableTest
                 firstAuthor = authorUtils.queryAuthorForName("name" + (m + clickSize - 2));
                 secondAuthor = authorUtils.queryAuthorForName("name" + (m + clickSize - 1));
 
-				databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstAuthor, secondAuthor));
-				databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondAuthor, firstAuthor));
+				authorApi.addCoauthor(firstAuthor, secondAuthor);
+				authorApi.addCoauthor(secondAuthor, firstAuthor);
 			}
 
 		}
