@@ -16,11 +16,12 @@ public interface AuthorToCluster
 		public static final String author_id = "author_id";
 	}
 
-	public long getAuthorId();
 
-	public void setAuthorId(final long authorId);
+    Author getAuthor();
 
-	public long getClusterId();
+    void setAuthor(Author author);
 
-	public void setClusterId(final long clusterId);
+    Cluster getCluster();
+
+    void setCluster(Cluster cluster);
 }

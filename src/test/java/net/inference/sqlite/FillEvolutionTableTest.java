@@ -3,6 +3,8 @@ package net.inference.sqlite;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import net.inference.Config;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Author;
@@ -18,7 +20,6 @@ import net.inference.sqlite.dto.EvolutionSliceImpl;
 import net.inference.sqlite.dto.CoAuthorshipImpl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,17 +82,17 @@ public class FillEvolutionTableTest
 		EvolutionSlice evolutionSlice = new EvolutionSliceImpl();
 		evolutionSlice.setTime(year);
 		evolutionSlice.setYear(year);
-		evolutionSlice.setEvolutionId(evolution.getId());
+		evolutionSlice.setEvolution(evolution);
 		evolutionSlice = databaseApi.addEvolutionSlice(evolutionSlice);
 
 
 		for (int m = 0; m < size; m += clickSize)
 		{
-			Cluster cluster = new ClusterImpl(evolutionSlice.getId());
+			Cluster cluster = new ClusterImpl(evolutionSlice);
 			databaseApi.addCluster(cluster);
 			for (int i = m; i < m + clickSize; i++)
 			{
-				databaseApi.addAuthorToCluster(new AuthorToClusterImpl(authorUtils.queryAuthorIdForName("name" + i), cluster.getId()));
+				databaseApi.addAuthorToCluster(new AuthorToClusterImpl(authorUtils.queryAuthorForName("name" + i), cluster));
 			}
 
 		}
@@ -104,7 +105,7 @@ public class FillEvolutionTableTest
 	{
 
         AuthorUtils authorUtils = new AuthorUtils(databaseApi);
-        long firstId, secondId;
+        Author firstAuthor, secondAuthor;
 		for (int m = 0; m < size; m += clickSize)
 		{
 
@@ -123,24 +124,24 @@ public class FillEvolutionTableTest
 			{
 				for (int j = i; j < m + clickSize; j++)
 				{
-                    firstId = authorUtils.queryAuthorIdForName("name" + i);
-                    secondId = authorUtils.queryAuthorIdForName("name" + j);
+                    firstAuthor = authorUtils.queryAuthorForName("name" + i);
+                    secondAuthor = authorUtils.queryAuthorForName("name" + j);
 
-                    databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstId, secondId));
+                    databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstAuthor, secondAuthor));
 					if (i != j)
 					{
-						databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondId, firstId));
+						databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondAuthor, firstAuthor));
 					}
 				}
 			}
 
 			if (m + clickSize < size)
 			{
-                firstId = authorUtils.queryAuthorIdForName("name" + (m + clickSize - 2));
-                secondId = authorUtils.queryAuthorIdForName("name" + (m + clickSize-1));
+                firstAuthor = authorUtils.queryAuthorForName("name" + (m + clickSize - 2));
+                secondAuthor = authorUtils.queryAuthorForName("name" + (m + clickSize - 1));
 
-				databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstId, secondId));
-				databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondId, firstId));
+				databaseApi.addCoAuthorship(new CoAuthorshipImpl(firstAuthor, secondAuthor));
+				databaseApi.addCoAuthorship(new CoAuthorshipImpl(secondAuthor, firstAuthor));
 			}
 
 		}
@@ -163,19 +164,14 @@ public class FillEvolutionTableTest
             }
         }
 
-        long queryAuthorIdForName(final String authorName) {
-            Map<String, Object> values = new HashMap<String, Object>();
-            values.put("name", authorName);
+        Author queryAuthorForName(final String authorName) {
+            QueryBuilder<AuthorImpl, Integer> builder = authorDao.queryBuilder();
             try {
-                List<AuthorImpl> authors = authorDao.queryForFieldValues(values);
-                if (authors == null || authors.size() == 0) {
-                    return -1;
-                }
-                return authorDao.extractId(authors.get(0)).longValue();
+                return builder.where().eq(Author.Column.name, authorName).queryForFirst();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("failed to retrieve author by name");
             }
-            return -1;
+            return null;
         }
     }
 }
