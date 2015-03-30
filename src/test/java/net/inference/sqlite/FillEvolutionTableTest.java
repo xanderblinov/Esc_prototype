@@ -43,7 +43,7 @@ public class FillEvolutionTableTest
 
 	private void execute()
 	{
-		DatabaseApi databaseApi = new SqliteApi(Config.Database.TEST);
+		DatabaseApi databaseApi = new SqliteApi(Config.Database.TEST, true);
 		databaseApi.onStart();
 
 		// create an instance of ArticleImpl

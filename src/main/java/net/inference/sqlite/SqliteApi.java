@@ -33,12 +33,12 @@ import net.inference.sqlite.dto.CoAuthorshipImpl;
 public class SqliteApi implements DatabaseApi
 {
 	private final DbHelper mDbHelper;
-	private DaoFactory mDaoFactory = new SqliteDaoFactory();
 	private ArticleApi mArticleApi = new ArticleApiImpl(this);
 
-	public SqliteApi(Config.Database database)
+	public SqliteApi(Config.Database database, boolean recreateDatabase)
 	{
-		mDbHelper = new DbHelper(database);
+		mDbHelper = new DbHelper(database, recreateDatabase);
+
 	}
 
 	@Override
@@ -53,12 +53,6 @@ public class SqliteApi implements DatabaseApi
 		mDbHelper.onStop();
 	}
 
-
-	@Override
-	public DaoFactory daoFactory()
-	{
-		return mDaoFactory;
-	}
 
 	@Override
 	public ArticleApi article()

@@ -19,8 +19,6 @@ import net.inference.database.dto.CoAuthorship;
 public interface DatabaseApi
 {
 
-	public DaoFactory daoFactory();
-
 	public ArticleApi article();
 
 	/**
