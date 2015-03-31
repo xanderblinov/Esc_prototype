@@ -1,14 +1,29 @@
 package net.inference.database;
 
-import net.inference.database.dto.Article;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.DatabaseTableConfig;
+
+import java.sql.SQLException;
 
 /**
- * Date: 12/23/2014
- * Time: 11:13 PM
- *
- * @author xanderblinov
+ * @author gzheyts
  */
-public interface DaoFactory
-{
-	public Article getArticleInstance();
+public class DaoFactory {
+
+    /**
+     * Create and return a Dao based on the arguments.
+     */
+    public static <T, ID> Dao<T, ID> createDao(ConnectionSource connectionSource, Class<T> clazz) throws SQLException {
+        return DaoManager.createDao(connectionSource, clazz);
+    }
+
+    /**
+     * Create and return a Dao based on the arguments.
+     */
+    public static <T, ID> Dao<T, ID> createDao(ConnectionSource connectionSource, DatabaseTableConfig<T> tableConfig)
+            throws SQLException {
+        return DaoManager.createDao(connectionSource, tableConfig);
+    }
 }

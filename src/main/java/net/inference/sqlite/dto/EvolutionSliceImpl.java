@@ -2,6 +2,7 @@ package net.inference.sqlite.dto;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import net.inference.database.dto.Evolution;
 import net.inference.database.dto.EvolutionSlice;
 
 /**
@@ -20,10 +21,25 @@ public class EvolutionSliceImpl implements EvolutionSlice
 	private String mYear;
 	@DatabaseField(columnName = Column.time)
 	private String mTime;
-	@DatabaseField(columnName = Column.evolution_id)
-	private long mEvolutionId;
 
-	public int getId()
+    @DatabaseField(foreign = true, columnName = Column.evolution_id)
+    private EvolutionImpl evolution;
+
+    public EvolutionSliceImpl() {
+        // for ormlite
+    }
+
+    public EvolutionSliceImpl(String mYear, String mTime, EvolutionImpl evolution) {
+        this.mYear = mYear;
+        this.mTime = mTime;
+        this.evolution = evolution;
+    }
+
+    public EvolutionSliceImpl(EvolutionImpl evolution) {
+        this.evolution = evolution;
+    }
+
+    public int getId()
 	{
 		return mId;
 	}
@@ -48,13 +64,34 @@ public class EvolutionSliceImpl implements EvolutionSlice
 		mTime = time;
 	}
 
-	public long getEvolutionId()
-	{
-		return mEvolutionId;
-	}
 
-	public void setEvolutionId(final long clusteringId)
-	{
-		mEvolutionId = clusteringId;
-	}
+    @Override
+    public Evolution getEvolution() {
+        return evolution;
+    }
+
+    @Override
+    public void setEvolution(Evolution evolution) {
+        this.evolution = (EvolutionImpl) evolution;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EvolutionSliceImpl that = (EvolutionSliceImpl) o;
+
+        if (mTime != null ? !mTime.equals(that.mTime) : that.mTime != null) return false;
+        if (mYear != null ? !mYear.equals(that.mYear) : that.mYear != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mYear != null ? mYear.hashCode() : 0;
+        result = 31 * result + (mTime != null ? mTime.hashCode() : 0);
+        return result;
+    }
 }

@@ -25,17 +25,21 @@ public class ArticleImpl implements Article
 	@DatabaseField(columnName = Column.source)
 	private int mSource;
 
+    @DatabaseField(foreign = true, columnName = Column.AUTHOR_ID_FIELD_NAME)
+    private AuthorImpl author;
+
 	public ArticleImpl()
 	{
 		// ORMLite needs a no-arg constructor
 	}
 
-	public ArticleImpl(final String name, final String sourceId, final int year, final int source)
+	public ArticleImpl(AuthorImpl author, final String name, final String sourceId, final int year, final int source)
 	{
 		mName = name;
 		mSourceId = sourceId;
 		mYear = year;
 		mSource = source;
+        setAuthor(author);
 	}
 
 
@@ -78,4 +82,12 @@ public class ArticleImpl implements Article
 	{
 		mSource = source;
 	}
+
+    public AuthorImpl getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(AuthorImpl author) {
+        this.author = author;
+    }
 }

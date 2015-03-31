@@ -3,6 +3,7 @@ package net.inference.sqlite.dto;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import net.inference.database.dto.Cluster;
+import net.inference.database.dto.EvolutionSlice;
 
 /**
  * Date: 2/1/2015
@@ -16,29 +17,29 @@ public class ClusterImpl implements Cluster
 	
 	@DatabaseField(columnName = Column.id, generatedId = true)
 	private long mId;
-	@DatabaseField(columnName = Column.slice_id)
-	private long mSliceId;
+	@DatabaseField(foreign = true, columnName = Column.slice_id)
+	private EvolutionSliceImpl evolutionSlice;
 
 	public ClusterImpl()
 	{
 	}
 
-	public ClusterImpl(final long sliceId)
+	public ClusterImpl(final EvolutionSlice slice)
 	{
-		mSliceId = sliceId;
+		setEvolutionSlice(slice);
 	}
 
-	public long getSliceId()
-	{
-		return mSliceId;
-	}
+    @Override
+    public EvolutionSlice getEvolutionSlice() {
+        return evolutionSlice;
+    }
 
-	public void setSliceId(final long sliceId)
-	{
-		mSliceId = sliceId;
-	}
+    @Override
+    public void setEvolutionSlice(EvolutionSlice slice) {
+        evolutionSlice = (EvolutionSliceImpl) slice;
+    }
 
-	public long getId()
+    public long getId()
 	{
 		return mId;
 	}

@@ -28,7 +28,7 @@ public interface EvolutionSlice
 
 	public void setTime(final String time);
 
-	public long getEvolutionId();
+	Evolution getEvolution();
 
-	public void setEvolutionId(final long clusteringId);
+    void setEvolution(Evolution evolution);
 }

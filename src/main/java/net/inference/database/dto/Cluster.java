@@ -17,9 +17,9 @@ public interface Cluster
 		public static final String slice_id = "slice_id";
 	}
 
-	public long getSliceId();
+    EvolutionSlice getEvolutionSlice();
 
-	public void setSliceId(final long sliceId);
+    void setEvolutionSlice(EvolutionSlice slice);
 
 	public long getId();
 

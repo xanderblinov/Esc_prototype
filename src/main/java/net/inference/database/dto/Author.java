@@ -17,6 +17,7 @@ public interface Author
 		public static final String surname = "surname";
 		public static final String name = "name";
 		public static final String encoding = "encoding";
+		public static final String click = "click";
 	}
 
 	public String getName();
@@ -30,4 +31,7 @@ public interface Author
 	public String getEncoding();
 
 	public void setEncoding(final String encoding);
+
+    String getClick();
+    void setClick(String click);
 }

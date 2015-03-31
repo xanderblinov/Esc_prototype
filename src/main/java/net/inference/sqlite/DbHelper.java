@@ -3,6 +3,8 @@ package net.inference.sqlite;
 import java.sql.SQLException;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.logger.Logger;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import net.inference.Config;
@@ -27,15 +29,31 @@ class DbHelper
 {
 	@SuppressWarnings("FieldCanBeLocal")
 	private static final String sBaseUrl = "jdbc:sqlite:";
+    private boolean mRecreateDatabase;
+
+    private static Logger logger = LoggerFactory.getLogger(DbHelper.class);
 
 	private ConnectionSource mConnectionSource;
+    private static Class[] tablesClassList = new Class[]{
+            ArticleImpl.class,
+            ClusterImpl.class,
+            EvolutionImpl.class,
+            EvolutionSliceImpl.class,
+            AuthorImpl.class,
+            AuthorToClusterImpl.class,
+            CoAuthorshipImpl.class,
+            ParameterImpl.class,
+            PrimitiveAuthorImpl.class,
+            PrimitiveCoAuthorshipImpl.class
+    };
 
-	private final Config.Database mDatabase;
+    private final Config.Database mDatabase;
 
-	public DbHelper(final Config.Database database)
+	public DbHelper(final Config.Database database, boolean recreateDatabase)
 	{
 		mDatabase = database;
-	}
+        mRecreateDatabase = recreateDatabase;
+    }
 
 	private String getUrl()
 	{
@@ -57,26 +75,44 @@ class DbHelper
 		{
 			initConnection();
 			ConnectionSource connectionSource = getConnection();
-			TableUtils.createTableIfNotExists(connectionSource, ArticleImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, ClusterImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, EvolutionImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, EvolutionSliceImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, AuthorImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, AuthorToClusterImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, CoAuthorshipImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, ParameterImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, PrimitiveAuthorImpl.class);
-			TableUtils.createTableIfNotExists(connectionSource, PrimitiveCoAuthorshipImpl.class);
+            if (mRecreateDatabase) {
+                logger.info("recreating database");
+                recreateDatabase(connectionSource);
+            } else {
+                logger.info("create database");
+                createDatabase(connectionSource);
+            }
 
 			//TODO add other tables
 		}
 		catch (SQLException e)
 		{
 			SqliteLog.log(e);
+            System.exit(1);
 		}
 	}
 
-	@Deprecated
+    private void recreateDatabase(ConnectionSource connectionSource) throws SQLException {
+        clearDatabase(connectionSource);
+        createDatabase(connectionSource);
+    }
+
+    private void clearDatabase(ConnectionSource connectionSource) throws SQLException{
+
+        for (Class clazz : tablesClassList) {
+            TableUtils.dropTable(connectionSource, clazz, false);
+        }
+    }
+
+    private void createDatabase(ConnectionSource connectionSource) throws SQLException {
+
+        for (Class clazz : tablesClassList) {
+            TableUtils.createTableIfNotExists(connectionSource, clazz);
+        }
+
+    }
+
+    @Deprecated
 	private void initConnection() throws SQLException
 	{
 		mConnectionSource = new JdbcPooledConnectionSource(getUrl());

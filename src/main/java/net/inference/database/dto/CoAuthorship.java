@@ -20,13 +20,15 @@ public interface CoAuthorship
 		public static final String article_id  = "article_id";
 	}
 
-	public long getAuthor();
 
-	public void setAuthor(final long author);
+    Author getAuthor();
 
-	public long getCoauthor();
 
-	public void setCoauthor(final long coauthor);
+    void setAuthor(Author author);
+
+    Author getCoauthor();
+
+    void setCoauthor(Author coauthor);
 
 	public int getYear();
 

@@ -2,7 +2,9 @@ package net.inference.sqlite.dto;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import net.inference.database.dto.Author;
 import net.inference.database.dto.AuthorToCluster;
+import net.inference.database.dto.Cluster;
 
 /**
  * Date: 2/15/2015
@@ -13,39 +15,39 @@ import net.inference.database.dto.AuthorToCluster;
 @DatabaseTable(tableName = AuthorToCluster.TABLE_NAME)
 public class AuthorToClusterImpl implements AuthorToCluster
 {
-	@DatabaseField(columnName = Column.author_id)
-	private long mAuthorId;
-	@DatabaseField(columnName = Column.cluster_id)
-	private long mClusterId;
+    @DatabaseField(generatedId = true)
+    private long id;
+
+	@DatabaseField(foreign = true, columnName = Column.author_id)
+	private AuthorImpl author;
+	@DatabaseField(foreign = true, columnName = Column.cluster_id)
+	private ClusterImpl cluster;
 
 
 	public AuthorToClusterImpl()
 	{
 	}
 
-	public AuthorToClusterImpl(final long authorId, final long clusterId)
+	public AuthorToClusterImpl(final Author author, final Cluster cluster)
 	{
-		mAuthorId = authorId;
-		mClusterId = clusterId;
+		setAuthor(author);
+		setCluster(cluster);
 	}
 
-	public long getAuthorId()
-	{
-		return mAuthorId;
-	}
 
-	public void setAuthorId(final long authorId)
-	{
-		mAuthorId = authorId;
-	}
+    public Author getAuthor() {
+        return author;
+    }
 
-	public long getClusterId()
-	{
-		return mClusterId;
-	}
+    public void setAuthor(Author author) {
+        this.author = (AuthorImpl) author;
+    }
 
-	public void setClusterId(final long clusterId)
-	{
-		mClusterId = clusterId;
-	}
+    public Cluster getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(Cluster cluster) {
+        this.cluster = (ClusterImpl) cluster;
+    }
 }

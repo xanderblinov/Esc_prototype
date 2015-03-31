@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
 import net.inference.Config;
 import net.inference.database.ArticleApi;
+import net.inference.database.AuthorApi;
 import net.inference.database.DaoFactory;
 import net.inference.database.DatabaseApi;
 import net.inference.database.dto.Article;
@@ -33,12 +35,13 @@ import net.inference.sqlite.dto.CoAuthorshipImpl;
 public class SqliteApi implements DatabaseApi
 {
 	private final DbHelper mDbHelper;
-	private DaoFactory mDaoFactory = new SqliteDaoFactory();
 	private ArticleApi mArticleApi = new ArticleApiImpl(this);
+    private AuthorApi  authorApi = new AuthorApiImpl(this);
 
-	public SqliteApi(Config.Database database)
+	public SqliteApi(Config.Database database, boolean recreateDatabase)
 	{
-		mDbHelper = new DbHelper(database);
+		mDbHelper = new DbHelper(database, recreateDatabase);
+
 	}
 
 	@Override
@@ -55,48 +58,47 @@ public class SqliteApi implements DatabaseApi
 
 
 	@Override
-	public DaoFactory daoFactory()
-	{
-		return mDaoFactory;
-	}
-
-	@Override
 	public ArticleApi article()
 	{
 		return mArticleApi;
 	}
 
-	public Dao<ArticleImpl, ?> getArticleDao() throws SQLException
+    @Override
+    public AuthorApi author() {
+        return authorApi;
+    }
+
+    public <T> Dao<ArticleImpl, T> getArticleDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ArticleImpl.class);
 	}
 
-	Dao<AuthorImpl, ?> getInferenceAuthorDao() throws SQLException
+	<T> Dao<AuthorImpl, T> getInferenceAuthorDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), AuthorImpl.class);
 	}
 
-	Dao<CoAuthorshipImpl, ?> getInferenceCoAuthorshipDao() throws SQLException
+    <T> Dao<CoAuthorshipImpl, T> getInferenceCoAuthorshipDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), CoAuthorshipImpl.class);
 	}
 
-	Dao<AuthorToClusterImpl, ?> getAuthorToClusterDao() throws SQLException
+    <T> Dao<AuthorToClusterImpl, T> getAuthorToClusterDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), AuthorToClusterImpl.class);
 	}
 
-	Dao<ClusterImpl, ?> getClusterDao() throws SQLException
+    <T> Dao<ClusterImpl, T> getClusterDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ClusterImpl.class);
 	}
 
-	Dao<EvolutionImpl, ?> getEvolutionDao() throws SQLException
+	<T> Dao<EvolutionImpl, T> getEvolutionDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), EvolutionImpl.class);
 	}
 
-	Dao<EvolutionSliceImpl, ?> getEvolutionSliceDao() throws SQLException
+    <T> Dao<EvolutionSliceImpl, T> getEvolutionSliceDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), EvolutionSliceImpl.class);
 	}
@@ -116,47 +118,7 @@ public class SqliteApi implements DatabaseApi
 		return null;
 	}
 
-	@Override
-	public Author addAuthor(final Author author)
-	{
-		try
-		{
-			return getInferenceAuthorDao().createIfNotExists((AuthorImpl) author);
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-		return null;
-	}
 
-	@Override
-	public CoAuthorship addCoAuthorship(final CoAuthorship author)
-	{
-		try
-		{
-			return getInferenceCoAuthorshipDao().createIfNotExists((CoAuthorshipImpl) author);
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-		return null;
-	}
-
-	@Override
-	public boolean addAuthorToCluster(final AuthorToCluster authorToCluster)
-	{
-		try
-		{
-			return getAuthorToClusterDao().create((AuthorToClusterImpl) authorToCluster) == 1;
-		}
-		catch (SQLException e)
-		{
-			SqliteLog.log(e);
-		}
-		return false;
-	}
 
 	@Override
 	public Cluster addCluster(final Cluster cluster)
