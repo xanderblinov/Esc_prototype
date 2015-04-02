@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.5
 version = '1.0'
@@ -54,4 +55,20 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+/*
+    upload to maven local repository
+:*/
+
+
+install {
+    repositories {
+        mavenLocal()
+    }
+    repositories.mavenInstaller {
+        pom.version = '1.0'
+        pom.artifactId = 'sqlite'
+        pom.groupId = 'sqlite'
+    }
 }
