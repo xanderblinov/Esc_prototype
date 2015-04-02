@@ -1,5 +1,6 @@
 package net.inference.sqlite;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
@@ -28,7 +29,7 @@ import net.inference.sqlite.dto.PrimitiveCoAuthorshipImpl;
 class DbHelper
 {
 	@SuppressWarnings("FieldCanBeLocal")
-	private static final String sBaseUrl = "jdbc:sqlite:";
+	private static final String sBaseUrl = "jdbc:sqlite:" + System.getProperty("user.home") + File.separator;
     private boolean mRecreateDatabase;
 
     private static Logger logger = LoggerFactory.getLogger(DbHelper.class);
