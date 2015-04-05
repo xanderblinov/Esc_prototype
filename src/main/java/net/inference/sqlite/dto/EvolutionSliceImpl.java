@@ -39,7 +39,7 @@ public class EvolutionSliceImpl implements EvolutionSlice
         this.evolution = evolution;
     }
 
-    public int getId()
+    public long getId()
 	{
 		return mId;
 	}

@@ -61,10 +61,13 @@ class DbHelper
 		return sBaseUrl + mDatabase.getName();
 	}
 
-	ConnectionSource getConnection() throws SQLException
-	{
-		return mConnectionSource;
-	}
+	ConnectionSource getConnection() throws SQLException {
+        if (mConnectionSource == null) {
+            mConnectionSource = new JdbcPooledConnectionSource(getUrl());
+        }
+
+        return mConnectionSource;
+    }
 
 	/**
 	 * int tables
@@ -74,7 +77,6 @@ class DbHelper
 
 		try
 		{
-			initConnection();
 			ConnectionSource connectionSource = getConnection();
             if (mRecreateDatabase) {
                 logger.info("recreating database");
@@ -112,12 +114,6 @@ class DbHelper
         }
 
     }
-
-    @Deprecated
-	private void initConnection() throws SQLException
-	{
-		mConnectionSource = new JdbcPooledConnectionSource(getUrl());
-	}
 
 	public void onStop()
 	{

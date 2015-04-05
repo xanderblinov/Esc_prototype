@@ -101,4 +101,9 @@ public class PrimitiveAuthorImpl implements PrimitiveAuthor
 	{
 		mInferenceId = inferenceId;
 	}
+
+    @Override
+    public long getId() {
+        return mId;
+    }
 }

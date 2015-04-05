@@ -76,4 +76,9 @@ public class CoAuthorshipImpl implements CoAuthorship {
 	{
 		mArticleId = articleId;
 	}
+
+    @Override
+    public long getId() {
+        return mId;
+    }
 }

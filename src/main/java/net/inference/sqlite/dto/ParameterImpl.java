@@ -54,4 +54,9 @@ public class ParameterImpl implements Parameter
 	{
 		mValue = value;
 	}
+
+    @Override
+    public long getId() {
+        return mId;
+    }
 }

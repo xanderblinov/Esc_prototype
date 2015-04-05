@@ -7,7 +7,7 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface Article
+public interface Article extends Entity
 {
 	public static final String TABLE_NAME = "article";
 

@@ -6,7 +6,7 @@ package net.inference.database.dto;
  *
  * @author xanderblinov
  */
-public interface AuthorToCluster
+public interface AuthorToCluster extends Entity
 {
 	public static final String TABLE_NAME = "author_to_cluster";
 

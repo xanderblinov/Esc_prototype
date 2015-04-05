@@ -90,4 +90,9 @@ public class ArticleImpl implements Article
     public void setAuthor(AuthorImpl author) {
         this.author = author;
     }
+
+    @Override
+    public long getId() {
+        return mId;
+    }
 }

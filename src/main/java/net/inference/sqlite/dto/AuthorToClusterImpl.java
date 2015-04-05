@@ -50,4 +50,9 @@ public class AuthorToClusterImpl implements AuthorToCluster
     public void setCluster(Cluster cluster) {
         this.cluster = (ClusterImpl) cluster;
     }
+
+    @Override
+    public long getId() {
+        return id;
+    }
 }

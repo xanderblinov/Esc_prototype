@@ -58,8 +58,8 @@ public class FillEvolutionTableTest
 
 		System.out.println("Article: " + article2.getName());*/
 
-		fillTestEvolution(databaseApi, 15, 5);
-		addEvolution(databaseApi,15,5,1991);
+		fillTestEvolution(databaseApi, 100, 10);
+		addEvolution(databaseApi,100,10,1991);
 		databaseApi.onStop();
 	}
 

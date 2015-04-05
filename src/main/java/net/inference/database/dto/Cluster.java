@@ -7,7 +7,7 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface Cluster
+public interface Cluster extends Entity
 {
 	public static final String TABLE_NAME = "cluster";
 
@@ -21,6 +21,5 @@ public interface Cluster
 
     void setEvolutionSlice(EvolutionSlice slice);
 
-	public long getId();
 
 }
