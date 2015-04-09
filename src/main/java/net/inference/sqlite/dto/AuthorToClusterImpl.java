@@ -55,4 +55,14 @@ public class AuthorToClusterImpl implements AuthorToCluster
     public long getId() {
         return id;
     }
+
+
+    @Override
+    public String toString() {
+        return "AuthorToClusterImpl{" +
+                "id=" + id +
+                ", author=" + author +
+                ", cluster=" + cluster +
+                '}';
+    }
 }

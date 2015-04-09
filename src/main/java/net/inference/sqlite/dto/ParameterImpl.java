@@ -59,4 +59,15 @@ public class ParameterImpl implements Parameter
     public long getId() {
         return mId;
     }
+
+
+	@Override
+	public String toString() {
+		return "ParameterImpl{" +
+				"mId=" + mId +
+				", mName='" + mName + '\'' +
+				", mSurname='" + mSurname + '\'' +
+				", mValue='" + mValue + '\'' +
+				'}';
+	}
 }

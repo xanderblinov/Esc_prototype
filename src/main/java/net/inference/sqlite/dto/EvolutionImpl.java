@@ -107,4 +107,16 @@ public class EvolutionImpl implements Evolution
         result = 31 * result + (mToYear != null ? mToYear.hashCode() : 0);
         return result;
     }
+
+	@Override
+	public String toString() {
+		return "EvolutionImpl{" +
+				"mId=" + mId +
+				", mTime='" + mTime + '\'' +
+				", mType=" + mType +
+				", mFromYear='" + mFromYear + '\'' +
+				", mToYear='" + mToYear + '\'' +
+				", slices=" + slices +
+				'}';
+	}
 }

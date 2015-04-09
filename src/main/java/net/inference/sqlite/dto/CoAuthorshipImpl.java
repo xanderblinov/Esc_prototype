@@ -81,4 +81,16 @@ public class CoAuthorshipImpl implements CoAuthorship {
     public long getId() {
         return mId;
     }
+
+
+	@Override
+	public String toString() {
+		return "CoAuthorshipImpl{" +
+				"mId=" + mId +
+				", author=" + author +
+				", coauthor=" + coauthor +
+				", mYear=" + mYear +
+				", mArticleId=" + mArticleId +
+				'}';
+	}
 }

@@ -2,6 +2,7 @@ package net.inference.sqlite;
 
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
+import net.inference.database.ClusterApi;
 import net.inference.sqlite.dto.ClusterImpl;
 
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author gzheyts
  */
-public class ClusterApiImpl {
+public class ClusterApiImpl implements ClusterApi {
     private static Logger logger = LoggerFactory.getLogger(ClusterApiImpl.class);
 
 

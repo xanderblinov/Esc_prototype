@@ -95,4 +95,17 @@ public class ArticleImpl implements Article
     public long getId() {
         return mId;
     }
+
+
+	@Override
+	public String toString() {
+		return "ArticleImpl{" +
+				"mId=" + mId +
+				", mName='" + mName + '\'' +
+				", mSourceId='" + mSourceId + '\'' +
+				", mYear=" + mYear +
+				", mSource=" + mSource +
+				", author=" + author +
+				'}';
+	}
 }

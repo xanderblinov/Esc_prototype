@@ -118,4 +118,16 @@ public class AuthorImpl implements Author
     public long getId() {
         return mId;
     }
+
+
+    @Override
+    public String toString() {
+        return "AuthorImpl{" +
+                "mId=" + mId +
+                ", mName='" + mName + '\'' +
+                ", mSurname='" + mSurname + '\'' +
+                ", mEncoding='" + mEncoding + '\'' +
+                ", mClick='" + mClick + '\'' +
+                '}';
+    }
 }

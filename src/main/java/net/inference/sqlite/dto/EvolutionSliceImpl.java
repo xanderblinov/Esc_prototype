@@ -94,4 +94,14 @@ public class EvolutionSliceImpl implements EvolutionSlice
         result = 31 * result + (mTime != null ? mTime.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "EvolutionSliceImpl{" +
+                "mId=" + mId +
+                ", mYear='" + mYear + '\'' +
+                ", mTime='" + mTime + '\'' +
+                ", evolution=" + evolution +
+                '}';
+    }
 }

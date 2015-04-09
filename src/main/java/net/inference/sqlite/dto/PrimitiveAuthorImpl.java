@@ -106,4 +106,17 @@ public class PrimitiveAuthorImpl implements PrimitiveAuthor
     public long getId() {
         return mId;
     }
+
+	@Override
+	public String toString() {
+		return "PrimitiveAuthorImpl{" +
+				"mId=" + mId +
+				", mName='" + mName + '\'' +
+				", mSurname='" + mSurname + '\'' +
+				", mArticleId=" + mArticleId +
+				", mSource='" + mSource + '\'' +
+				", mEncoding='" + mEncoding + '\'' +
+				", mInferenceId=" + mInferenceId +
+				'}';
+	}
 }

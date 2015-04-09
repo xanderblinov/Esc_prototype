@@ -44,4 +44,11 @@ public class ClusterImpl implements Cluster
 		return mId;
 	}
 
+	@Override
+	public String toString() {
+		return "ClusterImpl{" +
+				"mId=" + mId +
+				", evolutionSlice=" + evolutionSlice +
+				'}';
+	}
 }
