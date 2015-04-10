@@ -96,6 +96,32 @@ public class ArticleImpl implements Article
         return mId;
     }
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ArticleImpl article = (ArticleImpl) o;
+
+		if (mId != article.mId) return false;
+		if (mYear != article.mYear) return false;
+		if (mSource != article.mSource) return false;
+		if (mName != null ? !mName.equals(article.mName) : article.mName != null) return false;
+		if (mSourceId != null ? !mSourceId.equals(article.mSourceId) : article.mSourceId != null) return false;
+		return !(author != null ? !author.equals(article.author) : article.author != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = mId;
+		result = 31 * result + (mName != null ? mName.hashCode() : 0);
+		result = 31 * result + (mSourceId != null ? mSourceId.hashCode() : 0);
+		result = 31 * result + mYear;
+		result = 31 * result + mSource;
+		result = 31 * result + (author != null ? author.hashCode() : 0);
+		return result;
+	}
 
 	@Override
 	public String toString() {
