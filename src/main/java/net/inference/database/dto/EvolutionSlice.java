@@ -7,7 +7,7 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface EvolutionSlice
+public interface EvolutionSlice extends Entity
 {
 	public static final String TABLE_NAME = "evolution_slice";
 
@@ -18,7 +18,6 @@ public interface EvolutionSlice
 		public static final String time = "time";
 		public static final String evolution_id = "evolution_id";
 	}
-	public int getId();
 
 	public String getYear();
 

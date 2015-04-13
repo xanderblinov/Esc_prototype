@@ -7,7 +7,7 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface Evolution
+public interface Evolution extends Entity
 {
 	public static final String TABLE_NAME = "evolution";
 

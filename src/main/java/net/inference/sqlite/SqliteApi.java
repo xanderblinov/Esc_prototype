@@ -7,10 +7,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import net.inference.Config;
-import net.inference.database.ArticleApi;
-import net.inference.database.AuthorApi;
-import net.inference.database.DaoFactory;
-import net.inference.database.DatabaseApi;
+import net.inference.database.*;
 import net.inference.database.dto.Article;
 import net.inference.database.dto.Author;
 import net.inference.database.dto.AuthorToCluster;
@@ -37,6 +34,7 @@ public class SqliteApi implements DatabaseApi
 	private final DbHelper mDbHelper;
 	private ArticleApi mArticleApi = new ArticleApiImpl(this);
     private AuthorApi  authorApi = new AuthorApiImpl(this);
+	private ClusterApi clusterApi = new ClusterApiImpl(this);
 
 	public SqliteApi(Config.Database database, boolean recreateDatabase)
 	{
@@ -68,7 +66,13 @@ public class SqliteApi implements DatabaseApi
         return authorApi;
     }
 
-    public <T> Dao<ArticleImpl, T> getArticleDao() throws SQLException
+	@Override
+	public ClusterApi cluster() {
+		return clusterApi;
+	}
+
+
+	public <T> Dao<ArticleImpl, T> getArticleDao() throws SQLException
 	{
 		return DaoManager.createDao(mDbHelper.getConnection(), ArticleImpl.class);
 	}

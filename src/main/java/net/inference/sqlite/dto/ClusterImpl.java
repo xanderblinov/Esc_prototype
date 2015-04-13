@@ -44,4 +44,30 @@ public class ClusterImpl implements Cluster
 		return mId;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ClusterImpl cluster = (ClusterImpl) o;
+
+		if (mId != cluster.mId) return false;
+		return !(evolutionSlice != null ? !evolutionSlice.equals(cluster.evolutionSlice) : cluster.evolutionSlice != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = (int) (mId ^ (mId >>> 32));
+		result = 31 * result + (evolutionSlice != null ? evolutionSlice.hashCode() : 0);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "ClusterImpl{" +
+				"mId=" + mId +
+				", evolutionSlice=" + evolutionSlice +
+				'}';
+	}
 }

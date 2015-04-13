@@ -21,6 +21,7 @@ public interface DatabaseApi
 
 	public ArticleApi article();
     public AuthorApi  author();
+	public ClusterApi cluster();
 
 	/**
 	 * Init database and table

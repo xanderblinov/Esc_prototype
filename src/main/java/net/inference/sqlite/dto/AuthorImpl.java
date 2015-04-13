@@ -113,4 +113,21 @@ public class AuthorImpl implements Author
         result = 31 * result + (mEncoding != null ? mEncoding.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public long getId() {
+        return mId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "AuthorImpl{" +
+                "mId=" + mId +
+                ", mName='" + mName + '\'' +
+                ", mSurname='" + mSurname + '\'' +
+                ", mEncoding='" + mEncoding + '\'' +
+                ", mClick='" + mClick + '\'' +
+                '}';
+    }
 }

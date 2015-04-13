@@ -1,5 +1,6 @@
 package net.inference.sqlite;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
@@ -28,7 +29,7 @@ import net.inference.sqlite.dto.PrimitiveCoAuthorshipImpl;
 class DbHelper
 {
 	@SuppressWarnings("FieldCanBeLocal")
-	private static final String sBaseUrl = "jdbc:sqlite:";
+	private static final String sBaseUrl = "jdbc:sqlite:" + System.getProperty("user.home") + File.separator;
     private boolean mRecreateDatabase;
 
     private static Logger logger = LoggerFactory.getLogger(DbHelper.class);
@@ -60,10 +61,13 @@ class DbHelper
 		return sBaseUrl + mDatabase.getName();
 	}
 
-	ConnectionSource getConnection() throws SQLException
-	{
-		return mConnectionSource;
-	}
+	ConnectionSource getConnection() throws SQLException {
+        if (mConnectionSource == null) {
+            mConnectionSource = new JdbcPooledConnectionSource(getUrl());
+        }
+
+        return mConnectionSource;
+    }
 
 	/**
 	 * int tables
@@ -73,7 +77,6 @@ class DbHelper
 
 		try
 		{
-			initConnection();
 			ConnectionSource connectionSource = getConnection();
             if (mRecreateDatabase) {
                 logger.info("recreating database");
@@ -111,12 +114,6 @@ class DbHelper
         }
 
     }
-
-    @Deprecated
-	private void initConnection() throws SQLException
-	{
-		mConnectionSource = new JdbcPooledConnectionSource(getUrl());
-	}
 
 	public void onStop()
 	{

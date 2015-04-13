@@ -7,7 +7,7 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface CoAuthorship
+public interface CoAuthorship extends Entity
 {
 	public static final String TABLE_NAME = "co_authorship";
 

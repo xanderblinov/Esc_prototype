@@ -39,7 +39,7 @@ public class EvolutionSliceImpl implements EvolutionSlice
         this.evolution = evolution;
     }
 
-    public int getId()
+    public long getId()
 	{
 		return mId;
 	}
@@ -93,5 +93,15 @@ public class EvolutionSliceImpl implements EvolutionSlice
         int result = mYear != null ? mYear.hashCode() : 0;
         result = 31 * result + (mTime != null ? mTime.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "EvolutionSliceImpl{" +
+                "mId=" + mId +
+                ", mYear='" + mYear + '\'' +
+                ", mTime='" + mTime + '\'' +
+                ", evolution=" + evolution +
+                '}';
     }
 }

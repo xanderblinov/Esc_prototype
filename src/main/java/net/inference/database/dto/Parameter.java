@@ -7,7 +7,7 @@ package net.inference.database.dto;
  * @author xanderblinov
  */
 
-public interface Parameter
+public interface Parameter extends Entity
 {
 	public static final String TABLE_NAME = "parameter";
 

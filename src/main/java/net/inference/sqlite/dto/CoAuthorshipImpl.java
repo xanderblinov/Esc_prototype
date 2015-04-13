@@ -76,4 +76,46 @@ public class CoAuthorshipImpl implements CoAuthorship {
 	{
 		mArticleId = articleId;
 	}
+
+    @Override
+    public long getId() {
+        return mId;
+    }
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		CoAuthorshipImpl that = (CoAuthorshipImpl) o;
+
+		if (mId != that.mId) return false;
+		if (mYear != that.mYear) return false;
+		if (mArticleId != that.mArticleId) return false;
+		if (author != null ? !author.equals(that.author) : that.author != null) return false;
+		return !(coauthor != null ? !coauthor.equals(that.coauthor) : that.coauthor != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = mId;
+		result = 31 * result + (author != null ? author.hashCode() : 0);
+		result = 31 * result + (coauthor != null ? coauthor.hashCode() : 0);
+		result = 31 * result + mYear;
+		result = 31 * result + (int) (mArticleId ^ (mArticleId >>> 32));
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "CoAuthorshipImpl{" +
+				"mId=" + mId +
+				", author=" + author +
+				", coauthor=" + coauthor +
+				", mYear=" + mYear +
+				", mArticleId=" + mArticleId +
+				'}';
+	}
 }

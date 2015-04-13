@@ -75,4 +75,20 @@ public class PrimitiveCoAuthorshipImpl implements PrimitiveCoAuthorship
 	{
 		mArticleId = articleId;
 	}
+
+    @Override
+    public long getId() {
+        return mId;
+    }
+
+	@Override
+	public String toString() {
+		return "PrimitiveCoAuthorshipImpl{" +
+				"mId=" + mId +
+				", mAuthor='" + mAuthor + '\'' +
+				", mCoauthor='" + mCoauthor + '\'' +
+				", mYear=" + mYear +
+				", mArticleId=" + mArticleId +
+				'}';
+	}
 }

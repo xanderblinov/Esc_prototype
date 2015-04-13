@@ -23,7 +23,7 @@ public class AuthorApiImpl implements net.inference.database.AuthorApi {
     private static Logger logger = LoggerFactory.getLogger(AuthorApiImpl.class);
     private SqliteApi sqliteApi;
     private PreparedQuery<AuthorImpl> authorForClusterQuery;
-    private PreparedQuery<AuthorImpl> coauthorForAuthorQuerty;
+    private PreparedQuery<AuthorImpl> coauthorForAuthorQuery;
 
     public AuthorApiImpl(SqliteApi sqliteApi) {
         this.sqliteApi = sqliteApi;
@@ -87,11 +87,11 @@ public class AuthorApiImpl implements net.inference.database.AuthorApi {
     @Override
     public List<AuthorImpl> findCoauthors(final Author author) {
         try {
-            if (coauthorForAuthorQuerty == null) {
-                coauthorForAuthorQuerty = buildCoauthorForAuthorQuery();
+            if (coauthorForAuthorQuery == null) {
+                coauthorForAuthorQuery = buildCoauthorForAuthorQuery();
             }
-            coauthorForAuthorQuerty.setArgumentHolderValue(0, author);
-            return sqliteApi.getInferenceAuthorDao().query(coauthorForAuthorQuerty);
+            coauthorForAuthorQuery.setArgumentHolderValue(0, author);
+            return sqliteApi.getInferenceAuthorDao().query(coauthorForAuthorQuery);
 
         } catch (SQLException ex) {
             logger.error(ex, "");
