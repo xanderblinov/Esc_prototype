@@ -1,8 +1,6 @@
 package net.inference.database;
 
-import java.util.List;
-
-import net.inference.database.dto.Article;
+import net.inference.sqlite.dto.ArticleImpl;
 
 /**
  * Date: 12/23/2014
@@ -10,9 +8,7 @@ import net.inference.database.dto.Article;
  *
  * @author xanderblinov
  */
-public interface ArticleApi
+public interface ArticleApi extends BaseApi<ArticleImpl,Integer>
 {
-	public void addArticle(Article article);
 
-	public List<? extends Article> getAllArticles();
 }
