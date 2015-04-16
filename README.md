@@ -1,4 +1,4 @@
-Esc 
+Esc
 ======
+The <b>E</b>volution of <b>S</b>cientific <b>C</b>ommunities<br/>
 Prototype
-The <b>E</b>volution of <b>S</b>cientific <b>C</b>ommunities
